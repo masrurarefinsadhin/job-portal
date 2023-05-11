@@ -2,16 +2,11 @@ package com.sadhin.jobportal.jobportal.Entity;
 
 import com.sadhin.jobportal.jobportal.Enum.GenderType;
 import com.sadhin.jobportal.jobportal.Enum.SkillType;
-
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.UUID;
 @Entity
-@Data
 @Table(name = "candidate_user")
 public class CandidateUserEntity  {
     @Id
@@ -26,7 +21,7 @@ public class CandidateUserEntity  {
                     )
             }
     )
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(unique = true,updatable = false, nullable = false)
     private UUID id;
 
     @Column
@@ -35,20 +30,78 @@ public class CandidateUserEntity  {
     @Column
     private String lastName;
 
-    @Column(unique = true)
-    private String primaryEmail;
 
     @Column
     private GenderType genderType;
 
+
     @Column
     private SkillType skillType;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private  UserEntity userEntity;
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private   UserEntity userEntity;
+
+    public CandidateUserEntity() {
+    }
+    public CandidateUserEntity(UUID id, String firstName, String lastName, GenderType genderType, String currentAddress, SkillType skillType, UserEntity userEntity) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.genderType = genderType;
+        this.skillType = skillType;
+        this.userEntity = userEntity;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public GenderType getGenderType() {
+        return genderType;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        this.genderType = genderType;
+    }
 
 
 
 
+
+    public SkillType getSkillType() {
+        return skillType;
+    }
+
+    public void setSkillType(SkillType skillType) {
+        this.skillType = skillType;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
 }

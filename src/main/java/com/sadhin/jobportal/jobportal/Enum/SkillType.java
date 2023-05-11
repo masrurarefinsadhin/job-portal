@@ -10,5 +10,6 @@ public enum SkillType {
     DESIGN,
     EDUCATION,
     HOSPITALITY,
-    LAW
+    LAW,
+    OTHER
 }
