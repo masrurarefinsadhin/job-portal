@@ -18,6 +18,7 @@ public class CandidateMapper {
         if (candidateUser == null) {
             return null;
         }
+
         CandidateUserDto candidateUserDto = new CandidateUserDto();
         candidateUserDto.setCandidateId(candidateUser.getId());
         candidateUserDto.setUserId(candidateUser.getUserEntity().getId());
