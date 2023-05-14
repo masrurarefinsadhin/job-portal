@@ -7,7 +7,6 @@ public class CompanyUserDto {
 
     private String primaryEmail;
 
-    private
 
     private String password;
 
