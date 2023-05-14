@@ -1,21 +1,22 @@
 package com.sadhin.jobportal.jobportal.Entity;
 
 import com.sadhin.jobportal.jobportal.Enum.DegreeType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.UUID;
 
+@Table(name = "education_qualification")
 @Entity
-@Table(name = "candidate_education")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class CandidateEducationEntity {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class CompanyEducationQualification {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -28,7 +29,7 @@ public class CandidateEducationEntity {
                     )
             }
     )
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+    @Column(name = "id",unique = true, updatable = false, nullable = false)
     private UUID id;
 
     @Column
@@ -38,36 +39,12 @@ public class CandidateEducationEntity {
     private DegreeType degreeType;
 
     @Column
-    private String instituteName;
-
-    @Column
-    private String instituteAddress;
-
-    @Column
-    private String boardName;
-
-    @Column
-    private LocalDate startDate;
-
-    @Column
-    private LocalDate endDate;
-
-    @Column
-    private Double maxGrade;
-
-    @Column
-    private Double achievedGrade;
-
-    @Column
-    private String description;
-
-    @Column
-    private String majorSubject;
+    private String degreeTitle;
 
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_resume_id", referencedColumnName = "id")
-    private CandidateResumeEntity candidateResume;
+    @Column String majorSubject;
 
-
+    @ManyToOne()
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private CompanyJobPostEntity jobPost;
 }

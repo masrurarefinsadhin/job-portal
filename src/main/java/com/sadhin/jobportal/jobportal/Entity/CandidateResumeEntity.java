@@ -1,5 +1,7 @@
 package com.sadhin.jobportal.jobportal.Entity;
 
+import com.sadhin.jobportal.jobportal.Enum.BloodGroup;
+import com.sadhin.jobportal.jobportal.Enum.MaritalStatus;
 import com.sadhin.jobportal.jobportal.Enum.NationalityType;
 import com.sadhin.jobportal.jobportal.Enum.ReligionType;
 import lombok.*;
@@ -26,7 +28,7 @@ public class CandidateResumeEntity {
                     )
     }
     )
-    @Column(unique = true,updatable = false, nullable = false)
+    @Column(name = "id", unique = true,updatable = false, nullable = false)
     private String id;
 
     @Column
@@ -47,16 +49,28 @@ public class CandidateResumeEntity {
     @Column
     private NationalityType nationalityType;
 
-    @Column(unique = true)
+    @Column
     private Long nationalIdNumber;
 
     @Column
     private ReligionType religionType;
 
-    @OneToMany(mappedBy = "candidateResume")
+    @Column
+    private MaritalStatus maritalStatus;
+
+    @Column
+    private Long SecondaryContactNumber;
+
+    @Column
+    private BloodGroup bloodGroup;
+
+    @Column
+    private String secondaryEmail;
+
+    @OneToMany(mappedBy = "candidateResume", cascade = CascadeType.ALL)
     private List<CandidateEducationEntity> educationList;
 
-    @OneToMany(mappedBy = "candidateResume")
+    @OneToMany(mappedBy = "candidateResume", cascade = CascadeType.ALL)
     private List<CandidateExperienceEntity> experienceList;
 
 

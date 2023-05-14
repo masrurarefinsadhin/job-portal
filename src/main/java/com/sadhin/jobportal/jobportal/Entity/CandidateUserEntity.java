@@ -2,7 +2,6 @@ package com.sadhin.jobportal.jobportal.Entity;
 
 import com.sadhin.jobportal.jobportal.Enum.GenderType;
 import com.sadhin.jobportal.jobportal.Enum.SkillType;
-import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
@@ -21,7 +20,7 @@ public class CandidateUserEntity  {
                     )
             }
     )
-    @Column(unique = true,updatable = false, nullable = false)
+    @Column(unique = true, updatable = false, nullable = false)
     private UUID id;
 
     @Column
@@ -38,13 +37,13 @@ public class CandidateUserEntity  {
     @Column
     private SkillType skillType;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private   UserEntity userEntity;
+    public CandidateUserEntity(){}
 
-    public CandidateUserEntity() {
-    }
-    public CandidateUserEntity(UUID id, String firstName, String lastName, GenderType genderType, String currentAddress, SkillType skillType, UserEntity userEntity) {
+
+    public CandidateUserEntity(UUID id, String firstName, String lastName, GenderType genderType, SkillType skillType, UserEntity userEntity) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,10 +83,6 @@ public class CandidateUserEntity  {
     public void setGenderType(GenderType genderType) {
         this.genderType = genderType;
     }
-
-
-
-
 
     public SkillType getSkillType() {
         return skillType;

@@ -1,21 +1,26 @@
 package com.sadhin.jobportal.jobportal.Entity;
 
-import com.sadhin.jobportal.jobportal.Enum.DegreeType;
-import lombok.*;
+
+import com.sadhin.jobportal.jobportal.Enum.IndustryType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.w3c.dom.ranges.Range;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Table(name = "company_user")
 @Entity
-@Table(name = "candidate_education")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class CandidateEducationEntity {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class CompanyUserEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -31,43 +36,32 @@ public class CandidateEducationEntity {
     @Column(name = "id",unique = true,updatable = false, nullable = false)
     private UUID id;
 
-    @Column
-    private String degreeName;
+    @Column(unique = true)
+    private String companyName;
 
     @Column
-    private DegreeType degreeType;
+    private LocalDate timeOfEstablishment;
 
     @Column
-    private String instituteName;
+    private Integer maxNumberOfEmployee;
 
     @Column
-    private String instituteAddress;
+    private Integer minNumberOfEmployee;
 
     @Column
-    private String boardName;
+    private String companyAddress;
 
     @Column
-    private LocalDate startDate;
+    private IndustryType industryType;
 
     @Column
-    private LocalDate endDate;
+    private String primaryPersonName;
 
     @Column
-    private Double maxGrade;
+    private String primaryPersonDesignation;
 
-    @Column
-    private Double achievedGrade;
-
-    @Column
-    private String description;
-
-    @Column
-    private String majorSubject;
-
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_resume_id", referencedColumnName = "id")
-    private CandidateResumeEntity candidateResume;
-
+    @OneToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private   UserEntity userEntity;
 
 }

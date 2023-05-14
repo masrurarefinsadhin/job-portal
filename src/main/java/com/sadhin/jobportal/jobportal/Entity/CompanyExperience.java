@@ -1,19 +1,21 @@
 package com.sadhin.jobportal.jobportal.Entity;
 
-
-import com.sadhin.jobportal.jobportal.Enum.ExperienceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.UUID;
 
+@Table(name = "company_experience")
 @Entity
-@Table(name = "candidate_experience")
-public class CandidateExperienceEntity {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CompanyExperience {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -26,31 +28,23 @@ public class CandidateExperienceEntity {
                     )
             }
     )
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+    @Column(name = "id",unique = true, updatable = false, nullable = false)
     private UUID id;
 
     @Column
-    private ExperienceType ExperienceType;
+    private Integer minYearsOfExperience;
 
     @Column
-    private String ExperienceTitle;
+    private Integer maxYearsOfExperience;
 
     @Column
-    private String companyName;
+    private String areaOfExpertise;
 
+    //skill1,skill2,skill3
     @Column
-    private String designation;
+    private String listOfSkill;
 
-    @Column
-    private LocalDate startDate;
-
-    @Column
-    private LocalDate endDate;
-
-    @Column
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_resume_id", referencedColumnName = "id")
-    private CandidateResumeEntity candidateResume;
+    @ManyToOne()
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private CompanyJobPostEntity jobPost;
 }

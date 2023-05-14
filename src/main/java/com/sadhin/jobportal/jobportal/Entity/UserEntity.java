@@ -4,13 +4,16 @@ import com.sadhin.jobportal.jobportal.Enum.UserType;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "user_repository")
+@EntityListeners(AuditingEntityListener.class)
 public class UserEntity{
 
     @Id
@@ -25,7 +28,7 @@ public class UserEntity{
                     )
             }
     )
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(name = "id",unique = true, updatable = false, nullable = false)
     private UUID id;
 
     @Column(unique = true)
@@ -35,7 +38,6 @@ public class UserEntity{
     private String primaryContactNumber;
 
     @Column
-
     private Instant cratedAt;
 
     @Column
@@ -50,6 +52,7 @@ public class UserEntity{
 
     @Column
     private String previousPassword;
+
 
     @PrePersist
     public void PrePersist() {
