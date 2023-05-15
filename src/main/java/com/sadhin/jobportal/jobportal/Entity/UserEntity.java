@@ -35,7 +35,7 @@ public class UserEntity{
     private String primaryEmail;
 
     @Column(unique = true)
-    private String primaryContactNumber;
+    private Integer primaryContactNumber;
 
     @Column
     private Instant cratedAt;
@@ -70,7 +70,7 @@ public class UserEntity{
     }
     public UserEntity(UUID id,
                       String primaryEmail,
-                      String primaryContactNumber,
+                      Integer primaryContactNumber,
                       Instant cratedAt,
                       Instant updatedAt,
                       UserType userType,
@@ -103,11 +103,11 @@ public class UserEntity{
         this.primaryEmail = primaryEmail;
     }
 
-    public String getPrimaryContactNumber() {
+    public Integer getPrimaryContactNumber() {
         return primaryContactNumber;
     }
 
-    public void setPrimaryContactNumber(String primaryContactNumber) {
+    public void setPrimaryContactNumber(Integer primaryContactNumber) {
         this.primaryContactNumber = primaryContactNumber;
     }
 

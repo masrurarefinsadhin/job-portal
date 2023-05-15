@@ -7,11 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.w3c.dom.ranges.Range;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "company_user")
@@ -63,5 +62,9 @@ public class CompanyUserEntity {
     @OneToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private   UserEntity userEntity;
+
+    @OneToMany(mappedBy = "companyUserEntity", cascade = CascadeType.ALL)
+    private List<CompanyJobPostEntity> jobPostList;
+
 
 }

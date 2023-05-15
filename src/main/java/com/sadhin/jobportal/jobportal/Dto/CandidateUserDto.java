@@ -17,7 +17,7 @@ public class CandidateUserDto {
     private String primaryEmail;
     private String password;
     private String previousPassword;
-    private String primaryContactNumber;
+    private Integer primaryContactNumber;
     private GenderType genderType;
     private SkillType skillType;
     private Instant cratedAt;
@@ -27,7 +27,19 @@ public class CandidateUserDto {
 
     public CandidateUserDto() {
     }
-    public CandidateUserDto(UUID candidateId, UUID userId, String firstName, String lastName, String primaryEmail, String password, String previousPassword, String primaryContactNumber, GenderType genderType, SkillType skillType, Instant cratedAt, Instant updatedAt, UserType userType, String currentAddress) {
+    public CandidateUserDto(UUID candidateId,
+                            UUID userId,
+                            String firstName,
+                            String lastName,
+                            String primaryEmail,
+                            String password,
+                            String previousPassword,
+                            Integer primaryContactNumber,
+                            GenderType genderType,
+                            SkillType skillType,
+                            Instant cratedAt,
+                            Instant updatedAt,
+                            UserType userType, String currentAddress) {
         this.candidateId = candidateId;
         this.userId = userId;
         this.firstName = firstName;
@@ -100,11 +112,11 @@ public class CandidateUserDto {
         this.previousPassword = previousPassword;
     }
 
-    public String getPrimaryContactNumber() {
+    public Integer getPrimaryContactNumber() {
         return primaryContactNumber;
     }
 
-    public void setPrimaryContactNumber(String primaryContactNumber) {
+    public void setPrimaryContactNumber(Integer primaryContactNumber) {
         this.primaryContactNumber = primaryContactNumber;
     }
 

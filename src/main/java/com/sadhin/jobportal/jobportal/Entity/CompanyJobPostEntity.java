@@ -49,7 +49,7 @@ public class CompanyJobPostEntity {
 
 
     @Column
-    private String jonResponsibility;
+    private String jobResponsibility;
 
     @Column
     private JobLevel jobLevel;
@@ -90,13 +90,10 @@ public class CompanyJobPostEntity {
     @OneToMany(mappedBy = "jobPost",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<CompanyEducationQualification> educationQualificationList;
 
+    @OneToMany(mappedBy = "jobPost",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    List<CompanyExperience> companyExperienceList;
 
-
-
-
-
-
-
-
-
+    @ManyToOne()
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private CompanyUserEntity companyUserEntity;
 }
