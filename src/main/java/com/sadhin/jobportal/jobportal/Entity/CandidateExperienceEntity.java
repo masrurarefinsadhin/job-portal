@@ -15,19 +15,10 @@ import java.util.UUID;
 @Table(name = "candidate_experience")
 public class CandidateExperienceEntity {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id",unique = true,updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column
     private ExperienceType ExperienceType;

@@ -1,97 +1,42 @@
-package com.sadhin.jobportal.jobportal.Entity;
+package com.sadhin.jobportal.jobportal.Dto;
 
+import com.sadhin.jobportal.jobportal.Entity.CompanyEducationQualification;
+import com.sadhin.jobportal.jobportal.Entity.CompanyExperience;
+import com.sadhin.jobportal.jobportal.Entity.CompanyUserEntity;
 import com.sadhin.jobportal.jobportal.Enum.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
-@Table(name = "job_post")
-@Entity
-public class CompanyJobPostEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+public class PostDto {
     private Long id;
-
-    @Column
     private String jobTitle;
-
-
-
-    @Column
     private Integer vacancy;
-
-    @Column
     private SkillType requiredSkill;
-
-    @Column
     private JobType jobType;
-
-    @Column
     private LocalDate deadline;
-
-    @Column
     private String context;
-
-
-    @Column
     private String jobResponsibility;
-
-    @Column
     private JobLevel jobLevel;
-
-    @Column
     private String jobLocation;
-
-    @Column
     private Integer maxSalary;
-
-    @Column
     private Integer minSalary;
-
-    @Column
     private SalaryType salaryType;
-
-    @Column
     private LunchFacilityType lunchFacilityType;
-
-    @Column
     private SalaryReview salaryReview;
-
-    @Column
     private Integer numberOfYearlyBonus;
-
-    @Column
     private Workplace workplace;
-
-    @Column
     private GenderType genderType;
-
-    @Column
     private Integer ageMin;
-
-    @Column
     private Integer ageMax;
-
-    @OneToMany(mappedBy = "jobPost",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Long companyUserId;
     List<CompanyEducationQualification> educationQualificationList;
-
-    @OneToMany(mappedBy = "jobPost",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<CompanyExperience> companyExperienceList;
 
-    @ManyToOne()
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private CompanyUserEntity companyUserEntity;
-
-    public CompanyJobPostEntity() {
+    public PostDto() {
     }
-
-    public CompanyJobPostEntity(Long id, String jobTitle, Integer vacancy, SkillType requiredSkill, JobType jobType, LocalDate deadline, String context, String jobResponsibility, JobLevel jobLevel, String jobLocation, Integer maxSalary, Integer minSalary, SalaryType salaryType, LunchFacilityType lunchFacilityType, SalaryReview salaryReview, Integer numberOfYearlyBonus, Workplace workplace, GenderType genderType, Integer ageMin, Integer ageMax, List<CompanyEducationQualification> educationQualificationList, List<CompanyExperience> companyExperienceList, CompanyUserEntity companyUserEntity) {
+    public PostDto(Long id, String jobTitle, Integer vacancy, SkillType requiredSkill, JobType jobType, LocalDate deadline, String context, String jobResponsibility, JobLevel jobLevel, String jobLocation, Integer maxSalary, Integer minSalary, SalaryType salaryType, LunchFacilityType lunchFacilityType, SalaryReview salaryReview, Integer numberOfYearlyBonus, Workplace workplace, GenderType genderType, Integer ageMin, Integer ageMax, List<CompanyEducationQualification> educationQualificationList, List<CompanyExperience> companyExperienceList, Long companyUserId) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.vacancy = vacancy;
@@ -114,7 +59,7 @@ public class CompanyJobPostEntity {
         this.ageMax = ageMax;
         this.educationQualificationList = educationQualificationList;
         this.companyExperienceList = companyExperienceList;
-        this.companyUserEntity = companyUserEntity;
+        this.companyUserId = companyUserId;
     }
 
     public Long getId() {
@@ -293,11 +238,11 @@ public class CompanyJobPostEntity {
         this.companyExperienceList = companyExperienceList;
     }
 
-    public CompanyUserEntity getCompanyUserEntity() {
-        return companyUserEntity;
+    public Long getCompanyUserId() {
+        return companyUserId;
     }
 
-    public void setCompanyUserEntity(CompanyUserEntity companyUserEntity) {
-        this.companyUserEntity = companyUserEntity;
+    public void setCompanyUserId(Long companyUserId) {
+        this.companyUserId = companyUserId;
     }
 }

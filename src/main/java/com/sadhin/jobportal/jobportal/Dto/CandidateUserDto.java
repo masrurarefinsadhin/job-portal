@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class CandidateUserDto {
 
-    private UUID candidateId;
-    private UUID userId;
+    private Long candidateId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String primaryEmail;
@@ -27,8 +27,8 @@ public class CandidateUserDto {
 
     public CandidateUserDto() {
     }
-    public CandidateUserDto(UUID candidateId,
-                            UUID userId,
+    public CandidateUserDto(Long candidateId,
+                            Long userId,
                             String firstName,
                             String lastName,
                             String primaryEmail,
@@ -56,19 +56,19 @@ public class CandidateUserDto {
         this.currentAddress = currentAddress;
     }
 
-    public UUID getCandidateId() {
+    public Long getCandidateId() {
         return candidateId;
     }
 
-    public void setCandidateId(UUID candidateId) {
+    public void setCandidateId(Long candidateId) {
         this.candidateId = candidateId;
     }
 
-    public UUID getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

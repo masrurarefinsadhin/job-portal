@@ -17,19 +17,10 @@ import java.util.UUID;
 public class UserEntity{
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id",unique = true, updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column(unique = true)
     private String primaryEmail;
@@ -68,7 +59,7 @@ public class UserEntity{
 
     public UserEntity() {
     }
-    public UserEntity(UUID id,
+    public UserEntity(Long id,
                       String primaryEmail,
                       Integer primaryContactNumber,
                       Instant cratedAt,
@@ -87,11 +78,11 @@ public class UserEntity{
         this.previousPassword = previousPassword;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

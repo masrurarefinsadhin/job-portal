@@ -46,7 +46,6 @@ public class CandidateMapper {
         candidateUserEntity.setGenderType(candidateUserDto.getGenderType());
         candidateUserEntity.setSkillType(candidateUserDto.getSkillType());
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(candidateUserDto.getUserId());
         userEntity.setPrimaryEmail(candidateUserDto.getPrimaryEmail());
         userEntity.setPassword(candidateUserDto.getPassword());
         userEntity.setPreviousPassword(candidateUserDto.getPreviousPassword());
@@ -55,7 +54,6 @@ public class CandidateMapper {
         userEntity.setUpdatedAt(candidateUserDto.getUpdatedAt());
         userEntity.setUserType(candidateUserDto.getUserType());
         candidateUserEntity.setUserEntity(userEntity);
-
         return candidateUserEntity;
     }
 

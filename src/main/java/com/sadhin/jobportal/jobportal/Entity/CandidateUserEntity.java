@@ -4,24 +4,16 @@ import com.sadhin.jobportal.jobportal.Enum.GenderType;
 import com.sadhin.jobportal.jobportal.Enum.SkillType;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "candidate_user")
 public class CandidateUserEntity  {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     @Column(unique = true, updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column
     private String firstName;
@@ -40,10 +32,14 @@ public class CandidateUserEntity  {
     @OneToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private   UserEntity userEntity;
+
+    @OneToOne(mappedBy = "candidateUserEntity", cascade = CascadeType.ALL)
+    private CandidateResumeEntity candidateResumeEntityList;
+
     public CandidateUserEntity(){}
 
 
-    public CandidateUserEntity(UUID id, String firstName, String lastName, GenderType genderType, SkillType skillType, UserEntity userEntity) {
+    public CandidateUserEntity(Long id, String firstName, String lastName, GenderType genderType, SkillType skillType, UserEntity userEntity) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,11 +48,11 @@ public class CandidateUserEntity  {
         this.userEntity = userEntity;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
