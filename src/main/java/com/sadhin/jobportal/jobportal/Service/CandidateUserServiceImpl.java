@@ -5,6 +5,7 @@ import com.sadhin.jobportal.jobportal.Dto.PostDto;
 import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
 import com.sadhin.jobportal.jobportal.Entity.CandidateResumeEntity;
 import com.sadhin.jobportal.jobportal.Entity.CandidateUserEntity;
+import com.sadhin.jobportal.jobportal.Entity.CompanyJobPostEntity;
 import com.sadhin.jobportal.jobportal.Entity.UserEntity;
 import com.sadhin.jobportal.jobportal.Repository.CandidateResumeRepository;
 import com.sadhin.jobportal.jobportal.Repository.CandidateUserRepository;
@@ -14,6 +15,7 @@ import com.sadhin.jobportal.jobportal.Service.Mapper.CandidateMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -109,6 +111,39 @@ public class CandidateUserServiceImpl implements CandidateUserService{
             }).collect(Collectors.toList());
         }catch (Exception e){
          return null;
+        }
+    }
+
+    @Override
+    public Optional<PostDto> getJobPostById(Long id) {
+        try {
+            CompanyJobPostEntity companyJobPostEntity=jopPostRepository.findById(id).orElse(null);
+            PostDto postDto=new PostDto();
+            postDto.setId(companyJobPostEntity.getId());
+            postDto.setJobTitle(companyJobPostEntity.getJobTitle());
+            postDto.setVacancy(companyJobPostEntity.getVacancy());
+            postDto.setRequiredSkill(companyJobPostEntity.getRequiredSkill());
+            postDto.setJobType(companyJobPostEntity.getJobType());
+            postDto.setDeadline(companyJobPostEntity.getDeadline());
+            postDto.setContext(companyJobPostEntity.getContext());
+            postDto.setJobResponsibility(companyJobPostEntity.getJobResponsibility());
+            postDto.setJobLevel(companyJobPostEntity.getJobLevel());
+            postDto.setJobLocation(companyJobPostEntity.getJobLocation());
+            postDto.setMaxSalary(companyJobPostEntity.getMaxSalary());
+            postDto.setMinSalary(companyJobPostEntity.getMinSalary());
+            postDto.setSalaryType(companyJobPostEntity.getSalaryType());
+            postDto.setLunchFacilityType(companyJobPostEntity.getLunchFacilityType());
+            postDto.setSalaryReview(companyJobPostEntity.getSalaryReview());
+            postDto.setNumberOfYearlyBonus(companyJobPostEntity.getNumberOfYearlyBonus());
+            postDto.setWorkplace(companyJobPostEntity.getWorkplace());
+            postDto.setGenderType(companyJobPostEntity.getGenderType());
+            postDto.setAgeMax(companyJobPostEntity.getAgeMax());
+            postDto.setAgeMin(companyJobPostEntity.getAgeMin());
+            postDto.setCompanyUserId(companyJobPostEntity.getCompanyUserEntity().getId());
+            return Optional.of(postDto);
+        }
+        catch (Exception e){
+            return Optional.empty();
         }
     }
 

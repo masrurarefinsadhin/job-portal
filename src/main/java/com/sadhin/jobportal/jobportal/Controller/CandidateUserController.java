@@ -59,5 +59,15 @@ public class CandidateUserController {
             return ResponseEntity.ok(null);
         }
     }
+    @GetMapping("/get-job-post-by-id/{id}")
+    public ResponseEntity<PostDto> getJobPostById(@PathVariable("id") Long id){
+        try {
+            PostDto result = candidateUserService.getJobPostById(id).get();
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
+        }
+    }
+
 
 }

@@ -88,6 +88,9 @@ public class CompanyJobPostEntity {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private CompanyUserEntity companyUserEntity;
 
+    @OneToMany(mappedBy = "jobPost",cascade = CascadeType.ALL)
+    private List<ApplyEntity> applyEntityList;
+
     public CompanyJobPostEntity() {
     }
 

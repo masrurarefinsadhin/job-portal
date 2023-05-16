@@ -33,8 +33,8 @@ public class CandidateUserEntity  {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private   UserEntity userEntity;
 
-    @OneToOne(mappedBy = "candidateUserEntity", cascade = CascadeType.ALL)
-    private CandidateResumeEntity candidateResumeEntityList;
+    /*@OneToOne(mappedBy = "candidateUserEntity", cascade = CascadeType.ALL)
+    private CandidateResumeEntity candidateResumeEntityList;*/
 
     public CandidateUserEntity(){}
 

@@ -2,15 +2,19 @@ package com.sadhin.jobportal.jobportal.Service;
 
 import com.sadhin.jobportal.jobportal.Dto.CompanyUserDto;
 import com.sadhin.jobportal.jobportal.Dto.PostDto;
-import com.sadhin.jobportal.jobportal.Entity.CandidateUserEntity;
+import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
 import com.sadhin.jobportal.jobportal.Entity.CompanyJobPostEntity;
 import com.sadhin.jobportal.jobportal.Entity.CompanyUserEntity;
 import com.sadhin.jobportal.jobportal.Entity.UserEntity;
+import com.sadhin.jobportal.jobportal.Repository.CandidateResumeRepository;
 import com.sadhin.jobportal.jobportal.Repository.CompanyJobPostRepository;
 import com.sadhin.jobportal.jobportal.Repository.CompanyUserRepository;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyUserServiceImpl implements CompanyUserService{
@@ -18,14 +22,16 @@ public class CompanyUserServiceImpl implements CompanyUserService{
     private final CompanyUserRepository companyUserRepository;
     private final UserRepository userRepository;
     private final CompanyJobPostRepository companyJobPostRepository;
-
     private final CompanyMapper companyMapper;
 
-    public CompanyUserServiceImpl(CompanyUserRepository companyUserRepository, UserRepository userRepository, CompanyJobPostRepository companyJobPostRepository, CompanyMapper companyMapper) {
+    private final CandidateResumeRepository candidateResumeRepository;
+
+    public CompanyUserServiceImpl(CompanyUserRepository companyUserRepository, UserRepository userRepository, CompanyJobPostRepository companyJobPostRepository, CompanyMapper companyMapper, CandidateResumeRepository candidateResumeRepository) {
         this.companyUserRepository = companyUserRepository;
         this.userRepository = userRepository;
         this.companyJobPostRepository = companyJobPostRepository;
         this.companyMapper = companyMapper;
+        this.candidateResumeRepository = candidateResumeRepository;
     }
 
     @Override
@@ -79,6 +85,16 @@ public class CompanyUserServiceImpl implements CompanyUserService{
          return true;
         }catch (Exception e){
             return false;
+        }
+    }
+
+    @Override
+    public List<ResumeDto> getResumeList() {
+        try {
+            return candidateResumeRepository.findAll().stream().map(
+                    companyMapper::convertToResumeDto).collect(Collectors.toList());
+        }catch (Exception e){
+            return null;
         }
     }
 }

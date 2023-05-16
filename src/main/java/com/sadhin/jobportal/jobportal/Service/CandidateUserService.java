@@ -6,6 +6,7 @@ import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
 import com.sadhin.jobportal.jobportal.Entity.CandidateResumeEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CandidateUserService {
 
@@ -18,5 +19,5 @@ public interface CandidateUserService {
     List<PostDto> getJobList();
 
 
-
+    Optional<PostDto> getJobPostById(Long id);
 }

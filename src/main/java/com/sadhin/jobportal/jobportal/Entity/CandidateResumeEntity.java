@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "candidate_resume")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -67,8 +66,12 @@ public class CandidateResumeEntity {
     private List<CandidateExperienceEntity> experienceList;
 
     @OneToOne
-    @JoinColumn(name = "candidate_user_id", referencedColumnName = "id")
+    @JoinColumn(name = "candidate_user_id", referencedColumnName = "id", unique = true)
     private CandidateUserEntity candidateUserEntity;
+
+    @OneToMany(mappedBy = "candidateResume", cascade = CascadeType.ALL)
+    private List<ApplyEntity> applyEntityList;
+
     public CandidateResumeEntity() {
     }
     public CandidateResumeEntity(Long id, String fatherName, String motherName, String presentAddress, String permanentAddress, LocalDate dateOfBirth, NationalityType nationalityType, Long nationalIdNumber, ReligionType religionType, MaritalStatus maritalStatus, Long secondaryContactNumber, BloodGroup bloodGroup, String secondaryEmail, List<CandidateEducationEntity> educationList, List<CandidateExperienceEntity> experienceList, CandidateUserEntity candidateUserEntity) {

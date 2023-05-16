@@ -5,6 +5,8 @@ import com.sadhin.jobportal.jobportal.Service.CompanyUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200","http://localhost:35549"} )
 @RequestMapping("/common/company")
@@ -45,6 +47,16 @@ public class CompanyUserController {
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.ok(false);
+        }
+    }
+
+    @GetMapping ("/get-resume-list")
+    public ResponseEntity<List<ResumeDto>> getResumeList(){
+        try {
+            List<ResumeDto> result = companyUserService.getResumeList();
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
         }
     }
 

@@ -1,6 +1,8 @@
 package com.sadhin.jobportal.jobportal.Service.Mapper;
 
 import com.sadhin.jobportal.jobportal.Dto.CompanyUserDto;
+import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
+import com.sadhin.jobportal.jobportal.Entity.CandidateResumeEntity;
 import com.sadhin.jobportal.jobportal.Entity.CompanyUserEntity;
 import com.sadhin.jobportal.jobportal.Entity.UserEntity;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
@@ -69,4 +71,43 @@ public class CompanyMapper {
         return companyUserEntity;
     }
 
+    public ResumeDto convertToResumeDto(CandidateResumeEntity candidateResumeEntity) {
+        ResumeDto resumeDto = new ResumeDto();
+        resumeDto.setId(candidateResumeEntity.getId());
+        resumeDto.setCandidateUserId(candidateResumeEntity.getCandidateUserEntity().getId());
+        resumeDto.setFatherName(candidateResumeEntity.getFatherName());
+        resumeDto.setMotherName(candidateResumeEntity.getMotherName());
+        resumeDto.setPresentAddress(candidateResumeEntity.getPresentAddress());
+        resumeDto.setPermanentAddress(candidateResumeEntity.getPermanentAddress());
+        resumeDto.setDateOfBirth(candidateResumeEntity.getDateOfBirth());
+        resumeDto.setNationalityType(candidateResumeEntity.getNationalityType());
+        resumeDto.setNationalIdNumber(candidateResumeEntity.getNationalIdNumber());
+        resumeDto.setReligionType(candidateResumeEntity.getReligionType());
+        resumeDto.setMaritalStatus(candidateResumeEntity.getMaritalStatus());
+        resumeDto.setSecondaryContactNumber(candidateResumeEntity.getSecondaryContactNumber());
+        resumeDto.setSecondaryEmail(candidateResumeEntity.getSecondaryEmail());
+        resumeDto.setBloodGroup(candidateResumeEntity.getBloodGroup());
+        resumeDto.setEducationList(candidateResumeEntity.getEducationList());
+        resumeDto.setExperienceList(candidateResumeEntity.getExperienceList());
+        return resumeDto;
+    }
+    public CandidateResumeEntity convertToResumeEntity(ResumeDto resumeDto) {
+        CandidateResumeEntity candidateResumeEntity = new CandidateResumeEntity();
+        candidateResumeEntity.setId(resumeDto.getId());
+        candidateResumeEntity.setFatherName(resumeDto.getFatherName());
+        candidateResumeEntity.setMotherName(resumeDto.getMotherName());
+        candidateResumeEntity.setPresentAddress(resumeDto.getPresentAddress());
+        candidateResumeEntity.setPermanentAddress(resumeDto.getPermanentAddress());
+        candidateResumeEntity.setDateOfBirth(resumeDto.getDateOfBirth());
+        candidateResumeEntity.setNationalityType(resumeDto.getNationalityType());
+        candidateResumeEntity.setNationalIdNumber(resumeDto.getNationalIdNumber());
+        candidateResumeEntity.setReligionType(resumeDto.getReligionType());
+        candidateResumeEntity.setMaritalStatus(resumeDto.getMaritalStatus());
+        candidateResumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
+        candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
+        candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
+        candidateResumeEntity.setEducationList(resumeDto.getEducationList());
+        candidateResumeEntity.setExperienceList(resumeDto.getExperienceList());
+        return candidateResumeEntity;
+    }
 }
