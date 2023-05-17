@@ -69,5 +69,16 @@ public class CandidateUserController {
         }
     }
 
+    @PostMapping("/apply-for-job")
+    public ResponseEntity<Boolean> applyForJob(@RequestBody ApplyDto applyDto){
+
+        try {
+            boolean result = candidateUserService.applyForJob(applyDto);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(false);
+        }
+    }
+
 
 }

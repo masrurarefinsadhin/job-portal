@@ -1,53 +1,23 @@
-package com.sadhin.jobportal.jobportal.Entity;
+package com.sadhin.jobportal.jobportal.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Column;
 
-import javax.persistence.*;
-import java.util.UUID;
-
-@Table(name = "company_experience")
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class CompanyExperience {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+public class CompanyExperienceDto {
     private Long id;
-
-    @Column
     private Integer minYearsOfExperience;
-
-    @Column
     private Integer maxYearsOfExperience;
-
-    @Column
     private String areaOfExpertise;
 
     //skill1,skill2,skill3
-    @Column
     private String listOfSkill;
-
-    @ManyToOne()
-    @JoinColumn(name = "company_job_post_id", referencedColumnName = "id")
-    private CompanyJobPostEntity jobPost;
-
-    public CompanyExperience() {
+    public CompanyExperienceDto() {
     }
-    public CompanyExperience(Long id, Integer minYearsOfExperience, Integer maxYearsOfExperience, String areaOfExpertise, String listOfSkill, CompanyJobPostEntity jobPost) {
+    public CompanyExperienceDto(Long id, Integer minYearsOfExperience, Integer maxYearsOfExperience, String areaOfExpertise, String listOfSkill) {
         this.id = id;
         this.minYearsOfExperience = minYearsOfExperience;
         this.maxYearsOfExperience = maxYearsOfExperience;
         this.areaOfExpertise = areaOfExpertise;
         this.listOfSkill = listOfSkill;
-        this.jobPost = jobPost;
     }
 
     public Long getId() {
@@ -88,13 +58,5 @@ public class CompanyExperience {
 
     public void setListOfSkill(String listOfSkill) {
         this.listOfSkill = listOfSkill;
-    }
-
-    public CompanyJobPostEntity getJobPost() {
-        return jobPost;
-    }
-
-    public void setJobPost(CompanyJobPostEntity jobPost) {
-        this.jobPost = jobPost;
     }
 }

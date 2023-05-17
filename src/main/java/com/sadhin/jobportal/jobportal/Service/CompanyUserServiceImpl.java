@@ -1,15 +1,8 @@
 package com.sadhin.jobportal.jobportal.Service;
 
-import com.sadhin.jobportal.jobportal.Dto.CompanyUserDto;
-import com.sadhin.jobportal.jobportal.Dto.PostDto;
-import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
-import com.sadhin.jobportal.jobportal.Entity.CompanyJobPostEntity;
-import com.sadhin.jobportal.jobportal.Entity.CompanyUserEntity;
-import com.sadhin.jobportal.jobportal.Entity.UserEntity;
-import com.sadhin.jobportal.jobportal.Repository.CandidateResumeRepository;
-import com.sadhin.jobportal.jobportal.Repository.CompanyJobPostRepository;
-import com.sadhin.jobportal.jobportal.Repository.CompanyUserRepository;
-import com.sadhin.jobportal.jobportal.Repository.UserRepository;
+import com.sadhin.jobportal.jobportal.Dto.*;
+import com.sadhin.jobportal.jobportal.Entity.*;
+import com.sadhin.jobportal.jobportal.Repository.*;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +15,26 @@ public class CompanyUserServiceImpl implements CompanyUserService{
     private final CompanyUserRepository companyUserRepository;
     private final UserRepository userRepository;
     private final CompanyJobPostRepository companyJobPostRepository;
+
+    private final CompanyExperienceRepository companyExperienceRepository;
+
+    private final CompanyEducationRepository companyEducationRepository;
     private final CompanyMapper companyMapper;
 
     private final CandidateResumeRepository candidateResumeRepository;
 
-    public CompanyUserServiceImpl(CompanyUserRepository companyUserRepository, UserRepository userRepository, CompanyJobPostRepository companyJobPostRepository, CompanyMapper companyMapper, CandidateResumeRepository candidateResumeRepository) {
+    public CompanyUserServiceImpl(CompanyUserRepository companyUserRepository,
+                                  UserRepository userRepository,
+                                  CompanyJobPostRepository companyJobPostRepository,
+                                  CompanyExperienceRepository companyExperienceRepository,
+                                  CompanyEducationRepository companyEducationRepository,
+                                  CompanyMapper companyMapper,
+                                  CandidateResumeRepository candidateResumeRepository) {
         this.companyUserRepository = companyUserRepository;
         this.userRepository = userRepository;
         this.companyJobPostRepository = companyJobPostRepository;
+        this.companyExperienceRepository = companyExperienceRepository;
+        this.companyEducationRepository = companyEducationRepository;
         this.companyMapper = companyMapper;
         this.candidateResumeRepository = candidateResumeRepository;
     }
@@ -78,10 +83,24 @@ public class CompanyUserServiceImpl implements CompanyUserService{
             companyJobPostEntity.setGenderType(postDto.getGenderType());
             companyJobPostEntity.setAgeMax(postDto.getAgeMax());
             companyJobPostEntity.setAgeMin(postDto.getAgeMin());
-            companyJobPostEntity.setCompanyExperienceList(postDto.getCompanyExperienceList());
-            companyJobPostEntity.setEducationQualificationList(postDto.getEducationQualificationList());
             companyJobPostEntity.setCompanyUserEntity(companyUserEntity);
-            companyJobPostRepository.save(companyJobPostEntity);
+            companyJobPostEntity = companyJobPostRepository.save(companyJobPostEntity);
+
+            if (postDto.getCompanyExperienceList() != null){
+                for(CompanyExperienceDto experienceDto:postDto.getCompanyExperienceList()){
+                    CompanyExperience companyExperience = companyMapper.convertToCompanyExperience(experienceDto);
+                    companyExperience.setJobPost(companyJobPostEntity);
+                    companyExperienceRepository.save(companyExperience);
+                }
+            }
+            if(postDto.getEducationQualificationList() != null){
+                for (CompanyEducationQualificationDto educationDto:postDto.getEducationQualificationList()){
+                    CompanyEducationQualification companyEducationQualificationEntity = companyMapper.convertToCompanyEducation(educationDto);
+                    companyEducationQualificationEntity.setJobPost(companyJobPostEntity);
+                    companyEducationRepository.save(companyEducationQualificationEntity);
+                }
+            }
+
          return true;
         }catch (Exception e){
             return false;

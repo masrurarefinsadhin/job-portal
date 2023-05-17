@@ -1,10 +1,10 @@
 package com.sadhin.jobportal.jobportal.Service.Mapper;
 
+import com.sadhin.jobportal.jobportal.Dto.CompanyEducationQualificationDto;
+import com.sadhin.jobportal.jobportal.Dto.CompanyExperienceDto;
 import com.sadhin.jobportal.jobportal.Dto.CompanyUserDto;
 import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
-import com.sadhin.jobportal.jobportal.Entity.CandidateResumeEntity;
-import com.sadhin.jobportal.jobportal.Entity.CompanyUserEntity;
-import com.sadhin.jobportal.jobportal.Entity.UserEntity;
+import com.sadhin.jobportal.jobportal.Entity.*;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -87,8 +87,13 @@ public class CompanyMapper {
         resumeDto.setSecondaryContactNumber(candidateResumeEntity.getSecondaryContactNumber());
         resumeDto.setSecondaryEmail(candidateResumeEntity.getSecondaryEmail());
         resumeDto.setBloodGroup(candidateResumeEntity.getBloodGroup());
-        resumeDto.setEducationList(candidateResumeEntity.getEducationList());
-        resumeDto.setExperienceList(candidateResumeEntity.getExperienceList());
+
+        if (candidateResumeEntity.getEducationList() !=null){
+            resumeDto.setEducationList(candidateResumeEntity.getEducationList());
+        }
+        if(candidateResumeEntity.getExperienceList() !=null){
+            resumeDto.setExperienceList(candidateResumeEntity.getExperienceList());
+        }
         return resumeDto;
     }
     public CandidateResumeEntity convertToResumeEntity(ResumeDto resumeDto) {
@@ -106,8 +111,53 @@ public class CompanyMapper {
         candidateResumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
         candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
         candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
-        candidateResumeEntity.setEducationList(resumeDto.getEducationList());
-        candidateResumeEntity.setExperienceList(resumeDto.getExperienceList());
+        if (resumeDto.getEducationList()!=null){
+            candidateResumeEntity.setEducationList(resumeDto.getEducationList());
+        }
+        if (resumeDto.getExperienceList()!=null){
+            candidateResumeEntity.setExperienceList(resumeDto.getExperienceList());
+        }
+
         return candidateResumeEntity;
+    }
+
+    public CompanyExperience convertToCompanyExperience(CompanyExperienceDto experienceDto) {
+        CompanyExperience companyExperience = new CompanyExperience();
+        companyExperience.setId(experienceDto.getId());
+        companyExperience.setMinYearsOfExperience(experienceDto.getMinYearsOfExperience());
+        companyExperience.setMaxYearsOfExperience(experienceDto.getMaxYearsOfExperience());
+        companyExperience.setListOfSkill(experienceDto.getListOfSkill());
+        companyExperience.setAreaOfExpertise(experienceDto.getAreaOfExpertise());
+        return companyExperience;
+    }
+    public CompanyExperienceDto convertToCompanyExperienceDto(CompanyExperience companyExperience){
+        CompanyExperienceDto companyExperienceDto = new CompanyExperienceDto();
+        companyExperienceDto.setId(companyExperience.getId());
+        companyExperienceDto.setMinYearsOfExperience(companyExperience.getMinYearsOfExperience());
+        companyExperienceDto.setMaxYearsOfExperience(companyExperience.getMaxYearsOfExperience());
+        companyExperienceDto.setListOfSkill(companyExperience.getListOfSkill());
+        companyExperienceDto.setAreaOfExpertise(companyExperience.getAreaOfExpertise());
+        return companyExperienceDto;
+    }
+
+    public CompanyEducationQualification convertToCompanyEducation(
+            CompanyEducationQualificationDto educationDto
+    ) {
+        CompanyEducationQualification companyEducationQualification = new CompanyEducationQualification();
+        companyEducationQualification.setId(educationDto.getId());
+        companyEducationQualification.setDegreeName(educationDto.getDegreeName());
+        companyEducationQualification.setDegreeType(educationDto.getDegreeType());
+        companyEducationQualification.setDegreeTitle(educationDto.getDegreeTitle());
+        companyEducationQualification.setMajorSubject(educationDto.getMajorSubject());
+        return companyEducationQualification;
+    }
+    public CompanyEducationQualificationDto convertToCompanyEducationDto(CompanyEducationQualification companyEducationQualification){
+        CompanyEducationQualificationDto companyEducationQualificationDto = new CompanyEducationQualificationDto();
+        companyEducationQualificationDto.setId(companyEducationQualification.getId());
+        companyEducationQualificationDto.setDegreeName(companyEducationQualification.getDegreeName());
+        companyEducationQualificationDto.setDegreeType(companyEducationQualification.getDegreeType());
+        companyEducationQualificationDto.setDegreeTitle(companyEducationQualification.getDegreeTitle());
+        companyEducationQualificationDto.setMajorSubject(companyEducationQualification.getMajorSubject());
+        return companyEducationQualificationDto;
     }
 }

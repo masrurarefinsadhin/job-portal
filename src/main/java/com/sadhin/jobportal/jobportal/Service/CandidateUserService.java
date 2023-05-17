@@ -1,5 +1,6 @@
 package com.sadhin.jobportal.jobportal.Service;
 
+import com.sadhin.jobportal.jobportal.Dto.ApplyDto;
 import com.sadhin.jobportal.jobportal.Dto.CandidateUserDto;
 import com.sadhin.jobportal.jobportal.Dto.PostDto;
 import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
@@ -20,4 +21,6 @@ public interface CandidateUserService {
 
 
     Optional<PostDto> getJobPostById(Long id);
+
+    boolean applyForJob(ApplyDto applyDto);
 }

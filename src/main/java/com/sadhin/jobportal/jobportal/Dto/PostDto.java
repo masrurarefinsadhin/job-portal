@@ -31,12 +31,12 @@ public class PostDto {
     private Integer ageMin;
     private Integer ageMax;
     private Long companyUserId;
-    List<CompanyEducationQualification> educationQualificationList;
-    List<CompanyExperience> companyExperienceList;
+    List<CompanyEducationQualificationDto> educationQualificationList;
+    List<CompanyExperienceDto> companyExperienceList;
 
     public PostDto() {
     }
-    public PostDto(Long id, String jobTitle, Integer vacancy, SkillType requiredSkill, JobType jobType, LocalDate deadline, String context, String jobResponsibility, JobLevel jobLevel, String jobLocation, Integer maxSalary, Integer minSalary, SalaryType salaryType, LunchFacilityType lunchFacilityType, SalaryReview salaryReview, Integer numberOfYearlyBonus, Workplace workplace, GenderType genderType, Integer ageMin, Integer ageMax, List<CompanyEducationQualification> educationQualificationList, List<CompanyExperience> companyExperienceList, Long companyUserId) {
+    public PostDto(Long id, String jobTitle, Integer vacancy, SkillType requiredSkill, JobType jobType, LocalDate deadline, String context, String jobResponsibility, JobLevel jobLevel, String jobLocation, Integer maxSalary, Integer minSalary, SalaryType salaryType, LunchFacilityType lunchFacilityType, SalaryReview salaryReview, Integer numberOfYearlyBonus, Workplace workplace, GenderType genderType, Integer ageMin, Integer ageMax, List<CompanyEducationQualificationDto> educationQualificationList, List<CompanyExperienceDto> companyExperienceList, Long companyUserId) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.vacancy = vacancy;
@@ -222,19 +222,19 @@ public class PostDto {
         this.ageMax = ageMax;
     }
 
-    public List<CompanyEducationQualification> getEducationQualificationList() {
+    public List<CompanyEducationQualificationDto> getEducationQualificationList() {
         return educationQualificationList;
     }
 
-    public void setEducationQualificationList(List<CompanyEducationQualification> educationQualificationList) {
+    public void setEducationQualificationList(List<CompanyEducationQualificationDto> educationQualificationList) {
         this.educationQualificationList = educationQualificationList;
     }
 
-    public List<CompanyExperience> getCompanyExperienceList() {
+    public List<CompanyExperienceDto> getCompanyExperienceList() {
         return companyExperienceList;
     }
 
-    public void setCompanyExperienceList(List<CompanyExperience> companyExperienceList) {
+    public void setCompanyExperienceList(List<CompanyExperienceDto> companyExperienceList) {
         this.companyExperienceList = companyExperienceList;
     }
 

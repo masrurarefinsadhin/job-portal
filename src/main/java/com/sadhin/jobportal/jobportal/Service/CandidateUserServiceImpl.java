@@ -1,19 +1,16 @@
 package com.sadhin.jobportal.jobportal.Service;
 
+import com.sadhin.jobportal.jobportal.Dto.ApplyDto;
 import com.sadhin.jobportal.jobportal.Dto.CandidateUserDto;
 import com.sadhin.jobportal.jobportal.Dto.PostDto;
 import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
-import com.sadhin.jobportal.jobportal.Entity.CandidateResumeEntity;
-import com.sadhin.jobportal.jobportal.Entity.CandidateUserEntity;
-import com.sadhin.jobportal.jobportal.Entity.CompanyJobPostEntity;
-import com.sadhin.jobportal.jobportal.Entity.UserEntity;
-import com.sadhin.jobportal.jobportal.Repository.CandidateResumeRepository;
-import com.sadhin.jobportal.jobportal.Repository.CandidateUserRepository;
-import com.sadhin.jobportal.jobportal.Repository.CompanyJobPostRepository;
-import com.sadhin.jobportal.jobportal.Repository.UserRepository;
+import com.sadhin.jobportal.jobportal.Entity.*;
+import com.sadhin.jobportal.jobportal.Repository.*;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CandidateMapper;
+import com.sadhin.jobportal.jobportal.Service.Mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,14 +20,18 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     private final CandidateUserRepository candidateUserRepository;
     private final CandidateResumeRepository candidateResumeRepository;
     private final UserRepository userRepository;
+    private final ApplyRepository applyRepository;
     private final CandidateMapper candidateMapper;
 
+    private final CompanyMapper companyMapper;
     private final CompanyJobPostRepository jopPostRepository;
-    public CandidateUserServiceImpl(CandidateUserRepository candidateUserRepository, CandidateResumeRepository candidateResumeRepository, UserRepository userRepository, CandidateMapper candidateMapper, CompanyJobPostRepository jopPostRepository) {
+    public CandidateUserServiceImpl(CandidateUserRepository candidateUserRepository, CandidateResumeRepository candidateResumeRepository, UserRepository userRepository, ApplyRepository applyRepository, CandidateMapper candidateMapper, CompanyMapper companyMapper, CompanyJobPostRepository jopPostRepository) {
         this.candidateUserRepository = candidateUserRepository;
         this.candidateResumeRepository = candidateResumeRepository;
         this.userRepository = userRepository;
+        this.applyRepository = applyRepository;
         this.candidateMapper = candidateMapper;
+        this.companyMapper = companyMapper;
         this.jopPostRepository = jopPostRepository;
     }
 
@@ -58,9 +59,12 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     @Override
     public boolean createResume(ResumeDto resumeDto) {
         try {
-            CandidateUserEntity candidateUserEntity= candidateUserRepository.findById(resumeDto.getCandidateUserId()).orElse(null);
+            Optional<CandidateResumeEntity> candidateResume = candidateResumeRepository.findByCandidateUserId(resumeDto.getCandidateUserId());
             CandidateResumeEntity candidateResumeEntity=new CandidateResumeEntity();
+            candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
+            CandidateUserEntity candidateUserEntity= candidateUserRepository.findById(resumeDto.getCandidateUserId()).orElse(null);
             candidateResumeEntity.setCandidateUserEntity(candidateUserEntity);
+
             candidateResumeEntity.setFatherName(resumeDto.getFatherName());
             candidateResumeEntity.setMotherName(resumeDto.getMotherName());
             candidateResumeEntity.setPresentAddress(resumeDto.getPresentAddress());
@@ -84,31 +88,40 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     @Override
     public List<PostDto> getJobList() {
         try {
-            return jopPostRepository.findAll().stream().map(i->{
+            List<PostDto> listOfPost= jopPostRepository.findAll().stream().map(entity->{
                 PostDto postDto=new PostDto();
-                postDto.setId(i.getId());
-                postDto.setJobTitle(i.getJobTitle());
-                postDto.setVacancy(i.getVacancy());
-                postDto.setRequiredSkill(i.getRequiredSkill());
-                postDto.setJobType(i.getJobType());
-                postDto.setDeadline(i.getDeadline());
-                postDto.setContext(i.getContext());
-                postDto.setJobResponsibility(i.getJobResponsibility());
-                postDto.setJobLevel(i.getJobLevel());
-                postDto.setJobLocation(i.getJobLocation());
-                postDto.setMaxSalary(i.getMaxSalary());
-                postDto.setMinSalary(i.getMinSalary());
-                postDto.setSalaryType(i.getSalaryType());
-                postDto.setLunchFacilityType(i.getLunchFacilityType());
-                postDto.setSalaryReview(i.getSalaryReview());
-                postDto.setNumberOfYearlyBonus(i.getNumberOfYearlyBonus());
-                postDto.setWorkplace(i.getWorkplace());
-                postDto.setGenderType(i.getGenderType());
-                postDto.setAgeMax(i.getAgeMax());
-                postDto.setAgeMin(i.getAgeMin());
-                postDto.setCompanyUserId(i.getCompanyUserEntity().getId());
+                postDto.setId(entity.getId());
+                postDto.setJobTitle(entity.getJobTitle());
+                postDto.setVacancy(entity.getVacancy());
+                postDto.setRequiredSkill(entity.getRequiredSkill());
+                postDto.setJobType(entity.getJobType());
+                postDto.setDeadline(entity.getDeadline());
+                postDto.setContext(entity.getContext());
+                postDto.setJobResponsibility(entity.getJobResponsibility());
+                postDto.setJobLevel(entity.getJobLevel());
+                postDto.setJobLocation(entity.getJobLocation());
+                postDto.setMaxSalary(entity.getMaxSalary());
+                postDto.setMinSalary(entity.getMinSalary());
+                postDto.setSalaryType(entity.getSalaryType());
+                postDto.setLunchFacilityType(entity.getLunchFacilityType());
+                postDto.setSalaryReview(entity.getSalaryReview());
+                postDto.setNumberOfYearlyBonus(entity.getNumberOfYearlyBonus());
+                postDto.setWorkplace(entity.getWorkplace());
+                postDto.setGenderType(entity.getGenderType());
+                postDto.setAgeMax(entity.getAgeMax());
+                postDto.setAgeMin(entity.getAgeMin());
+                postDto.setCompanyUserId(entity.getCompanyUserEntity().getId());
+                if (entity.getCompanyExperienceList() !=null){
+                    postDto.setCompanyExperienceList(entity.getCompanyExperienceList().stream().map(
+                            companyMapper::convertToCompanyExperienceDto).collect(Collectors.toList()));
+                }
+                if(entity.getEducationQualificationList() != null){
+                    postDto.setEducationQualificationList(entity.getEducationQualificationList().stream().map(
+                            companyMapper::convertToCompanyEducationDto).collect(Collectors.toList()));
+                }
                 return postDto;
             }).collect(Collectors.toList());
+            return listOfPost;
         }catch (Exception e){
          return null;
         }
@@ -140,10 +153,41 @@ public class CandidateUserServiceImpl implements CandidateUserService{
             postDto.setAgeMax(companyJobPostEntity.getAgeMax());
             postDto.setAgeMin(companyJobPostEntity.getAgeMin());
             postDto.setCompanyUserId(companyJobPostEntity.getCompanyUserEntity().getId());
+            if (companyJobPostEntity.getEducationQualificationList() !=null){
+                postDto.setCompanyExperienceList(companyJobPostEntity.getCompanyExperienceList().stream().map(
+                        companyMapper::convertToCompanyExperienceDto).collect(Collectors.toList()));
+            }
+            if(companyJobPostEntity.getCompanyExperienceList() !=null){
+                postDto.setEducationQualificationList(companyJobPostEntity.getEducationQualificationList().stream().map(
+                        companyMapper::convertToCompanyEducationDto).collect(Collectors.toList()));
+            }
             return Optional.of(postDto);
         }
         catch (Exception e){
             return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean applyForJob(ApplyDto applyDto) {
+        try {
+            CandidateUserEntity candidateUserEntity=candidateUserRepository.findById(applyDto.getCandidateUserId()).orElse(null);
+            if (candidateUserEntity==null){
+                return false;
+            }
+            CandidateResumeEntity candidateResumeEntity=candidateResumeRepository.findByCandidateUserId(candidateUserEntity.getId()).orElse(null);
+            if (candidateResumeEntity==null){
+                return false;
+            }
+            CompanyJobPostEntity companyJobPostEntity=jopPostRepository.findById(applyDto.getJobPostId()).orElse(null);
+            ApplyEntity applyEntity=new ApplyEntity();
+            applyEntity.setCandidateResume(candidateResumeEntity);
+            applyEntity.setJobPost(companyJobPostEntity);
+            applyEntity.setAppliedAt(Instant.now());
+            applyRepository.save(applyEntity);
+            return true;
+        }catch (Exception e){
+            return false;
         }
     }
 

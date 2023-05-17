@@ -20,7 +20,7 @@ public class CandidateResumeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id", unique = true,updatable = false, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @Column
