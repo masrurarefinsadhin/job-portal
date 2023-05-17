@@ -22,7 +22,6 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     private final UserRepository userRepository;
     private final ApplyRepository applyRepository;
     private final CandidateMapper candidateMapper;
-
     private final CompanyMapper companyMapper;
     private final CompanyJobPostRepository jopPostRepository;
     public CandidateUserServiceImpl(CandidateUserRepository candidateUserRepository, CandidateResumeRepository candidateResumeRepository, UserRepository userRepository, ApplyRepository applyRepository, CandidateMapper candidateMapper, CompanyMapper companyMapper, CompanyJobPostRepository jopPostRepository) {
@@ -59,13 +58,19 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     @Override
     public boolean createResume(ResumeDto resumeDto) {
         try {
+
+
             Optional<CandidateResumeEntity> candidateResume = candidateResumeRepository.findByCandidateUserId(resumeDto.getCandidateUserId());
-            CandidateResumeEntity candidateResumeEntity=new CandidateResumeEntity();
-            candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
+            //candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
+
             CandidateUserEntity candidateUserEntity= candidateUserRepository.findById(resumeDto.getCandidateUserId()).orElse(null);
+            CandidateResumeEntity candidateResumeEntity= candidateMapper.convertToCandidateResumeEntity(resumeDto);
+
+            candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
+            //candidateResumeEntity.setId(candidateResume.get().getId());
             candidateResumeEntity.setCandidateUserEntity(candidateUserEntity);
 
-            candidateResumeEntity.setFatherName(resumeDto.getFatherName());
+            /*candidateResumeEntity.setFatherName(resumeDto.getFatherName());
             candidateResumeEntity.setMotherName(resumeDto.getMotherName());
             candidateResumeEntity.setPresentAddress(resumeDto.getPresentAddress());
             candidateResumeEntity.setPermanentAddress(resumeDto.getPermanentAddress());
@@ -77,7 +82,8 @@ public class CandidateUserServiceImpl implements CandidateUserService{
             candidateResumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
             candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
             candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
-            candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
+            candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());*/
+
             candidateResumeRepository.save(candidateResumeEntity);
             return true;
         } catch (Exception e) {
@@ -88,7 +94,7 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     @Override
     public List<PostDto> getJobList() {
         try {
-            List<PostDto> listOfPost= jopPostRepository.findAll().stream().map(entity->{
+            /*List<PostDto> listOfPost= jopPostRepository.findAll().stream().map(entity->{
                 PostDto postDto=new PostDto();
                 postDto.setId(entity.getId());
                 postDto.setJobTitle(entity.getJobTitle());
@@ -118,10 +124,14 @@ public class CandidateUserServiceImpl implements CandidateUserService{
                 if(entity.getEducationQualificationList() != null){
                     postDto.setEducationQualificationList(entity.getEducationQualificationList().stream().map(
                             companyMapper::convertToCompanyEducationDto).collect(Collectors.toList()));
+
                 }
                 return postDto;
             }).collect(Collectors.toList());
             return listOfPost;
+                */
+            return jopPostRepository.findAll().stream().map(companyMapper::convertToPostDto).collect(Collectors.toList());
+
         }catch (Exception e){
          return null;
         }
@@ -130,7 +140,7 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     @Override
     public Optional<PostDto> getJobPostById(Long id) {
         try {
-            CompanyJobPostEntity companyJobPostEntity=jopPostRepository.findById(id).orElse(null);
+            /*CompanyJobPostEntity companyJobPostEntity=jopPostRepository.findById(id).orElse(null);
             PostDto postDto=new PostDto();
             postDto.setId(companyJobPostEntity.getId());
             postDto.setJobTitle(companyJobPostEntity.getJobTitle());
@@ -161,6 +171,10 @@ public class CandidateUserServiceImpl implements CandidateUserService{
                 postDto.setEducationQualificationList(companyJobPostEntity.getEducationQualificationList().stream().map(
                         companyMapper::convertToCompanyEducationDto).collect(Collectors.toList()));
             }
+            return Optional.of(postDto);*/
+            CompanyJobPostEntity companyJobPostEntity=jopPostRepository.findById(id).orElse(null);
+            PostDto postDto=companyMapper.convertToPostDto(companyJobPostEntity);
+            postDto.setCompanyUserId(companyJobPostEntity.getCompanyUserEntity().getId());
             return Optional.of(postDto);
         }
         catch (Exception e){

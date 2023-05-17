@@ -18,7 +18,6 @@ import java.util.List;
 @Data
 public class ResumeDto {
     private Long id;
-    private Long candidateUserId;
     private String fatherName;
     private String motherName;
     private String presentAddress;
@@ -31,11 +30,12 @@ public class ResumeDto {
     private Long SecondaryContactNumber;
     private BloodGroup bloodGroup;
     private String secondaryEmail;
-    private List<CandidateEducationEntity> educationList;
-    private List<CandidateExperienceEntity> experienceList;
+    private Long candidateUserId;
+    private List<CandidateEducationDto> educationList;
+    private List<CandidateExperienceDto> experienceList;
     public ResumeDto() {
     }
-    public ResumeDto(Long id, Long candidateUserId, String fatherName, String motherName, String presentAddress, String permanentAddress, LocalDate dateOfBirth, NationalityType nationalityType, Long nationalIdNumber, ReligionType religionType, MaritalStatus maritalStatus, Long secondaryContactNumber, BloodGroup bloodGroup, String secondaryEmail, List<CandidateEducationEntity> educationList, List<CandidateExperienceEntity> experienceList) {
+    public ResumeDto(Long id, Long candidateUserId, String fatherName, String motherName, String presentAddress, String permanentAddress, LocalDate dateOfBirth, NationalityType nationalityType, Long nationalIdNumber, ReligionType religionType, MaritalStatus maritalStatus, Long secondaryContactNumber, BloodGroup bloodGroup, String secondaryEmail, List<CandidateEducationDto> educationList, List<CandidateExperienceDto> experienceList) {
         this.id = id;
         this.candidateUserId = candidateUserId;
         this.fatherName = fatherName;
@@ -166,19 +166,19 @@ public class ResumeDto {
         this.secondaryEmail = secondaryEmail;
     }
 
-    public List<CandidateEducationEntity> getEducationList() {
+    public List<CandidateEducationDto> getEducationList() {
         return educationList;
     }
 
-    public void setEducationList(List<CandidateEducationEntity> educationList) {
+    public void setEducationList(List<CandidateEducationDto> educationList) {
         this.educationList = educationList;
     }
 
-    public List<CandidateExperienceEntity> getExperienceList() {
+    public List<CandidateExperienceDto> getExperienceList() {
         return experienceList;
     }
 
-    public void setExperienceList(List<CandidateExperienceEntity> experienceList) {
+    public void setExperienceList(List<CandidateExperienceDto> experienceList) {
         this.experienceList = experienceList;
     }
 }

@@ -3,6 +3,7 @@ package com.sadhin.jobportal.jobportal.Service;
 import com.sadhin.jobportal.jobportal.Dto.*;
 import com.sadhin.jobportal.jobportal.Entity.*;
 import com.sadhin.jobportal.jobportal.Repository.*;
+import com.sadhin.jobportal.jobportal.Service.Mapper.CandidateMapper;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class CompanyUserServiceImpl implements CompanyUserService{
     private final CompanyEducationRepository companyEducationRepository;
     private final CompanyMapper companyMapper;
 
+    private final CandidateMapper candidateMapper;
+
     private final CandidateResumeRepository candidateResumeRepository;
 
     public CompanyUserServiceImpl(CompanyUserRepository companyUserRepository,
@@ -29,7 +32,7 @@ public class CompanyUserServiceImpl implements CompanyUserService{
                                   CompanyExperienceRepository companyExperienceRepository,
                                   CompanyEducationRepository companyEducationRepository,
                                   CompanyMapper companyMapper,
-                                  CandidateResumeRepository candidateResumeRepository
+                                  CandidateMapper candidateMapper, CandidateResumeRepository candidateResumeRepository
     ) {
         this.companyUserRepository = companyUserRepository;
         this.userRepository = userRepository;
@@ -37,6 +40,7 @@ public class CompanyUserServiceImpl implements CompanyUserService{
         this.companyExperienceRepository = companyExperienceRepository;
         this.companyEducationRepository = companyEducationRepository;
         this.companyMapper = companyMapper;
+        this.candidateMapper = candidateMapper;
         this.candidateResumeRepository = candidateResumeRepository;
     }
 
@@ -132,7 +136,7 @@ public class CompanyUserServiceImpl implements CompanyUserService{
     public List<ResumeDto> getResumeList() {
         try {
             return candidateResumeRepository.findAll().stream().map(
-                    companyMapper::convertToResumeDto).collect(Collectors.toList());
+                    candidateMapper::convertToResumeDto).collect(Collectors.toList());
         }catch (Exception e){
             return null;
         }

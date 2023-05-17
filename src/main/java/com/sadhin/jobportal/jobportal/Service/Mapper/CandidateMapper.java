@@ -3,12 +3,12 @@ package com.sadhin.jobportal.jobportal.Service.Mapper;
 import com.sadhin.jobportal.jobportal.Dto.CandidateEducationDto;
 import com.sadhin.jobportal.jobportal.Dto.CandidateExperienceDto;
 import com.sadhin.jobportal.jobportal.Dto.CandidateUserDto;
-import com.sadhin.jobportal.jobportal.Entity.CandidateEducationEntity;
-import com.sadhin.jobportal.jobportal.Entity.CandidateExperienceEntity;
-import com.sadhin.jobportal.jobportal.Entity.CandidateUserEntity;
-import com.sadhin.jobportal.jobportal.Entity.UserEntity;
+import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
+import com.sadhin.jobportal.jobportal.Entity.*;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class CandidateMapper {
@@ -116,6 +116,54 @@ public class CandidateMapper {
         experienceDto.setDescription(experienceEntity.getDescription());
         return experienceDto;
     }
+    public  CandidateResumeEntity convertToCandidateResumeEntity(ResumeDto resumeDto) {
+        CandidateResumeEntity resumeEntity = new CandidateResumeEntity();
+        resumeEntity.setId(resumeDto.getId());
+        resumeEntity.setFatherName(resumeDto.getFatherName());
+        resumeEntity.setMotherName(resumeDto.getMotherName());
+        resumeEntity.setPresentAddress(resumeDto.getPresentAddress());
+        resumeEntity.setPermanentAddress(resumeDto.getPermanentAddress());
+        resumeEntity.setDateOfBirth(resumeDto.getDateOfBirth());
+        resumeEntity.setNationalityType(resumeDto.getNationalityType());
+        resumeEntity.setNationalIdNumber(resumeDto.getNationalIdNumber());
+        resumeEntity.setReligionType(resumeDto.getReligionType());
+        resumeEntity.setMaritalStatus(resumeDto.getMaritalStatus());
+        resumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
+        resumeEntity.setBloodGroup(resumeDto.getBloodGroup());
+        resumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
+        //resumeEntity.setEducationList(resumeDto.getEducationList());
+        //resumeEntity.setExperienceList(resumeDto.getExperienceList());
+        return resumeEntity;
+    }
+    public  ResumeDto convertToResumeDto(CandidateResumeEntity resumeEntity) {
+        ResumeDto resumeDto = new ResumeDto();
+        resumeDto.setId(resumeEntity.getId());
+        resumeDto.setFatherName(resumeEntity.getFatherName());
+        resumeDto.setMotherName(resumeEntity.getMotherName());
+        resumeDto.setPresentAddress(resumeEntity.getPresentAddress());
+        resumeDto.setPermanentAddress(resumeEntity.getPermanentAddress());
+        resumeDto.setDateOfBirth(resumeEntity.getDateOfBirth());
+        resumeDto.setNationalityType(resumeEntity.getNationalityType());
+        resumeDto.setNationalIdNumber(resumeEntity.getNationalIdNumber());
+        resumeDto.setReligionType(resumeEntity.getReligionType());
+        resumeDto.setMaritalStatus(resumeEntity.getMaritalStatus());
+        resumeDto.setSecondaryContactNumber(resumeEntity.getSecondaryContactNumber());
+        resumeDto.setBloodGroup(resumeEntity.getBloodGroup());
+        resumeDto.setSecondaryEmail(resumeEntity.getSecondaryEmail());
+        if (resumeEntity.getEducationList()!=null){
+            resumeDto.setEducationList(resumeEntity.getEducationList()
+                    .stream().map(this::convertToCandidateEducationDto).collect(Collectors.toList()));
+        }
+        if (resumeEntity.getExperienceList()!=null){
+            resumeDto.setExperienceList(resumeEntity.getExperienceList()
+                    .stream().map(this::convertToCandidateExperienceDto).collect(Collectors.toList()));
+        }
+        resumeDto.setCandidateUserId(resumeEntity.getCandidateUserEntity().getId());
+        return resumeDto;
+    }
+
+
+
 
 }
 

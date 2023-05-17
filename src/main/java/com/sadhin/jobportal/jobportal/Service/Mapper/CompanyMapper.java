@@ -70,7 +70,7 @@ public class CompanyMapper {
         return companyUserEntity;
     }
 
-    public ResumeDto convertToResumeDto(CandidateResumeEntity candidateResumeEntity) {
+    /*public ResumeDto convertToResumeDto(CandidateResumeEntity candidateResumeEntity) {
         ResumeDto resumeDto = new ResumeDto();
         resumeDto.setId(candidateResumeEntity.getId());
         resumeDto.setCandidateUserId(candidateResumeEntity.getCandidateUserEntity().getId());
@@ -87,15 +87,15 @@ public class CompanyMapper {
         resumeDto.setSecondaryEmail(candidateResumeEntity.getSecondaryEmail());
         resumeDto.setBloodGroup(candidateResumeEntity.getBloodGroup());
 
-        if (candidateResumeEntity.getEducationList() !=null){
+        *//*if (candidateResumeEntity.getEducationList() !=null){
             resumeDto.setEducationList(candidateResumeEntity.getEducationList());
         }
         if(candidateResumeEntity.getExperienceList() !=null){
             resumeDto.setExperienceList(candidateResumeEntity.getExperienceList());
-        }
+        }*//*
         return resumeDto;
-    }
-    public CandidateResumeEntity convertToResumeEntity(ResumeDto resumeDto) {
+    }*/
+    /*public CandidateResumeEntity convertToResumeEntity(ResumeDto resumeDto) {
         CandidateResumeEntity candidateResumeEntity = new CandidateResumeEntity();
         candidateResumeEntity.setId(resumeDto.getId());
         candidateResumeEntity.setFatherName(resumeDto.getFatherName());
@@ -110,15 +110,15 @@ public class CompanyMapper {
         candidateResumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
         candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
         candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
-        if (resumeDto.getEducationList()!=null){
+        *//*if (resumeDto.getEducationList()!=null){
             candidateResumeEntity.setEducationList(resumeDto.getEducationList());
         }
         if (resumeDto.getExperienceList()!=null){
             candidateResumeEntity.setExperienceList(resumeDto.getExperienceList());
-        }
+        }*//*
 
         return candidateResumeEntity;
-    }
+    }*/
 
     public CompanyExperience convertToCompanyExperience(CompanyExperienceDto experienceDto) {
         CompanyExperience companyExperience = new CompanyExperience();
@@ -189,7 +189,9 @@ public class CompanyMapper {
         if (jobPostEntity.getCompanyExperienceList()!=null){
             postDto.setCompanyExperienceList(jobPostEntity.getCompanyExperienceList()
                     .stream().map(this::convertToCompanyExperienceDto).collect(Collectors.toList()));
-        }return postDto;
+        }
+        postDto.setCompanyUserId(jobPostEntity.getCompanyUserEntity().getId());
+        return postDto;
     }
     public CompanyJobPostEntity convertToCompanyJobPostEntity(PostDto postDto) {
         CompanyJobPostEntity jobPostEntity = new CompanyJobPostEntity();
