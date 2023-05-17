@@ -1,52 +1,29 @@
-package com.sadhin.jobportal.jobportal.Entity;
-
+package com.sadhin.jobportal.jobportal.Dto;
 
 import com.sadhin.jobportal.jobportal.Enum.ExperienceType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
 
-@Entity
-@Table(name = "candidate_experience")
-public class CandidateExperienceEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+import javax.persistence.Column;
+import java.time.LocalDate;
+
+public class CandidateExperienceDto {
     private Long id;
 
-    @Column
     private ExperienceType ExperienceType;
 
-    @Column
     private String ExperienceTitle;
 
-    @Column
     private String companyName;
 
-    @Column
     private String designation;
 
-    @Column
     private LocalDate startDate;
 
-    @Column
     private LocalDate endDate;
 
-    @Column
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_resume_id", referencedColumnName = "id")
-    private CandidateResumeEntity candidateResume;
-    public CandidateExperienceEntity() {
+    public CandidateExperienceDto() {
     }
-    public CandidateExperienceEntity(Long id, com.sadhin.jobportal.jobportal.Enum.ExperienceType experienceType, String experienceTitle, String companyName, String designation, LocalDate startDate, LocalDate endDate, String description, CandidateResumeEntity candidateResume) {
+    public CandidateExperienceDto(Long id, com.sadhin.jobportal.jobportal.Enum.ExperienceType experienceType, String experienceTitle, String companyName, String designation, LocalDate startDate, LocalDate endDate, String description) {
         this.id = id;
         ExperienceType = experienceType;
         ExperienceTitle = experienceTitle;
@@ -55,7 +32,6 @@ public class CandidateExperienceEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.candidateResume = candidateResume;
     }
 
     public Long getId() {
@@ -120,13 +96,5 @@ public class CandidateExperienceEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public CandidateResumeEntity getCandidateResume() {
-        return candidateResume;
-    }
-
-    public void setCandidateResume(CandidateResumeEntity candidateResume) {
-        this.candidateResume = candidateResume;
     }
 }

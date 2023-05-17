@@ -1,6 +1,10 @@
 package com.sadhin.jobportal.jobportal.Service.Mapper;
 
+import com.sadhin.jobportal.jobportal.Dto.CandidateEducationDto;
+import com.sadhin.jobportal.jobportal.Dto.CandidateExperienceDto;
 import com.sadhin.jobportal.jobportal.Dto.CandidateUserDto;
+import com.sadhin.jobportal.jobportal.Entity.CandidateEducationEntity;
+import com.sadhin.jobportal.jobportal.Entity.CandidateExperienceEntity;
 import com.sadhin.jobportal.jobportal.Entity.CandidateUserEntity;
 import com.sadhin.jobportal.jobportal.Entity.UserEntity;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
@@ -56,7 +60,62 @@ public class CandidateMapper {
         candidateUserEntity.setUserEntity(userEntity);
         return candidateUserEntity;
     }
-
+    public CandidateEducationDto convertToCandidateEducationDto (CandidateEducationEntity educationEntity){
+        CandidateEducationDto educationDto = new CandidateEducationDto();
+        educationDto.setId(educationEntity.getId());
+        educationDto.setDegreeName(educationEntity.getDegreeName());
+        educationDto.setDegreeType(educationEntity.getDegreeType());
+        educationDto.setInstituteName(educationEntity.getInstituteName());
+        educationDto.setInstituteAddress(educationEntity.getInstituteAddress());
+        educationDto.setBoardName(educationEntity.getBoardName());
+        educationDto.setStartDate(educationEntity.getStartDate());
+        educationDto.setEndDate(educationEntity.getEndDate());
+        educationDto.setMaxGrade(educationEntity.getMaxGrade());
+        educationDto.setAchievedGrade(educationEntity.getAchievedGrade());
+        educationDto.setDescription(educationEntity.getDescription());
+        educationDto.setMajorSubject(educationEntity.getMajorSubject());
+        return educationDto;
+    }
+    public CandidateEducationEntity convertToCandidateEducationEntity (CandidateEducationDto educationDto){
+        CandidateEducationEntity educationEntity = new CandidateEducationEntity();
+        educationEntity.setId(educationDto.getId());
+        educationEntity.setDegreeName(educationDto.getDegreeName());
+        educationEntity.setDegreeType(educationDto.getDegreeType());
+        educationEntity.setInstituteName(educationDto.getInstituteName());
+        educationEntity.setInstituteAddress(educationDto.getInstituteAddress());
+        educationEntity.setBoardName(educationDto.getBoardName());
+        educationEntity.setStartDate(educationDto.getStartDate());
+        educationEntity.setEndDate(educationDto.getEndDate());
+        educationEntity.setMaxGrade(educationDto.getMaxGrade());
+        educationEntity.setAchievedGrade(educationDto.getAchievedGrade());
+        educationEntity.setDescription(educationDto.getDescription());
+        educationEntity.setMajorSubject(educationDto.getMajorSubject());
+        return educationEntity;
+    }
+    public CandidateExperienceEntity convertToCandidateExperienceEntity (CandidateExperienceDto experienceDto){
+        CandidateExperienceEntity experienceEntity = new CandidateExperienceEntity();
+        experienceEntity.setId(experienceDto.getId());
+        experienceEntity.setExperienceType(experienceDto.getExperienceType());
+        experienceEntity.setExperienceTitle(experienceDto.getExperienceTitle());
+        experienceEntity.setCompanyName(experienceDto.getCompanyName());
+        experienceEntity.setDesignation(experienceDto.getDesignation());
+        experienceEntity.setStartDate(experienceDto.getStartDate());
+        experienceEntity.setEndDate(experienceDto.getEndDate());
+        experienceEntity.setDescription(experienceDto.getDescription());
+        return experienceEntity;
+    }
+    public CandidateExperienceDto convertToCandidateExperienceDto(CandidateExperienceEntity experienceEntity){
+        CandidateExperienceDto experienceDto = new CandidateExperienceDto();
+        experienceDto.setId(experienceEntity.getId());
+        experienceDto.setExperienceType(experienceEntity.getExperienceType());
+        experienceDto.setExperienceTitle(experienceEntity.getExperienceTitle());
+        experienceDto.setCompanyName(experienceEntity.getCompanyName());
+        experienceDto.setDesignation(experienceEntity.getDesignation());
+        experienceDto.setStartDate(experienceEntity.getStartDate());
+        experienceDto.setEndDate(experienceEntity.getEndDate());
+        experienceDto.setDescription(experienceEntity.getDescription());
+        return experienceDto;
+    }
 
 }
 

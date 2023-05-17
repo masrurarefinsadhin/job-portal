@@ -1,65 +1,26 @@
-package com.sadhin.jobportal.jobportal.Entity;
+package com.sadhin.jobportal.jobportal.Dto;
 
 import com.sadhin.jobportal.jobportal.Enum.DegreeType;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import java.time.LocalDate;
-import java.util.UUID;
 
-@Entity
-@Table(name = "candidate_education")
-@Getter
-@Setter
-public class CandidateEducationEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+public class CandidateEducationDto {
     private Long id;
-
-    @Column
     private String degreeName;
-
-    @Column
     private DegreeType degreeType;
-
-    @Column
     private String instituteName;
-
-    @Column
     private String instituteAddress;
-
-    @Column
     private String boardName;
-
-    @Column
     private LocalDate startDate;
-
-    @Column
     private LocalDate endDate;
-
-    @Column
     private Double maxGrade;
-
-    @Column
     private Double achievedGrade;
-
-    @Column
     private String description;
-
-    @Column
     private String majorSubject;
-
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_resume_id", referencedColumnName = "id")
-    private CandidateResumeEntity candidateResume;
-    public CandidateEducationEntity() {
+    public CandidateEducationDto() {
     }
-    public CandidateEducationEntity(Long id, String degreeName, DegreeType degreeType, String instituteName, String instituteAddress, String boardName, LocalDate startDate, LocalDate endDate, Double maxGrade, Double achievedGrade, String description, String majorSubject, CandidateResumeEntity candidateResume) {
+    public CandidateEducationDto(Long id, String degreeName, DegreeType degreeType, String instituteName, String instituteAddress, String boardName, LocalDate startDate, LocalDate endDate, Double maxGrade, Double achievedGrade, String description, String majorSubject) {
         this.id = id;
         this.degreeName = degreeName;
         this.degreeType = degreeType;
@@ -72,7 +33,6 @@ public class CandidateEducationEntity {
         this.achievedGrade = achievedGrade;
         this.description = description;
         this.majorSubject = majorSubject;
-        this.candidateResume = candidateResume;
     }
 
     public Long getId() {
@@ -169,13 +129,5 @@ public class CandidateEducationEntity {
 
     public void setMajorSubject(String majorSubject) {
         this.majorSubject = majorSubject;
-    }
-
-    public CandidateResumeEntity getCandidateResume() {
-        return candidateResume;
-    }
-
-    public void setCandidateResume(CandidateResumeEntity candidateResume) {
-        this.candidateResume = candidateResume;
     }
 }

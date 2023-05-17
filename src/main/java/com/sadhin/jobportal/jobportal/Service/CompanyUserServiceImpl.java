@@ -29,7 +29,8 @@ public class CompanyUserServiceImpl implements CompanyUserService{
                                   CompanyExperienceRepository companyExperienceRepository,
                                   CompanyEducationRepository companyEducationRepository,
                                   CompanyMapper companyMapper,
-                                  CandidateResumeRepository candidateResumeRepository) {
+                                  CandidateResumeRepository candidateResumeRepository
+    ) {
         this.companyUserRepository = companyUserRepository;
         this.userRepository = userRepository;
         this.companyJobPostRepository = companyJobPostRepository;
@@ -62,7 +63,7 @@ public class CompanyUserServiceImpl implements CompanyUserService{
     @Override
     public boolean createJobPost(PostDto postDto) {
         try {
-            CompanyUserEntity companyUserEntity= companyUserRepository.findById(postDto.getCompanyUserId()).orElse(null);
+            /*CompanyUserEntity companyUserEntity= companyUserRepository.findById(postDto.getCompanyUserId()).orElse(null);
             CompanyJobPostEntity companyJobPostEntity=new CompanyJobPostEntity();
             companyJobPostEntity.setJobTitle(postDto.getJobTitle());
             companyJobPostEntity.setVacancy(postDto.getVacancy());
@@ -100,8 +101,28 @@ public class CompanyUserServiceImpl implements CompanyUserService{
                     companyEducationRepository.save(companyEducationQualificationEntity);
                 }
             }
+*/
+            CompanyUserEntity companyUserEntity= companyUserRepository.findById(postDto.getCompanyUserId()).orElse(null);
+            CompanyJobPostEntity companyJobPostEntity= companyMapper.convertToCompanyJobPostEntity(postDto);
+            companyJobPostEntity.setCompanyUserEntity(companyUserEntity);
+            companyJobPostRepository.save(companyJobPostEntity);
 
-         return true;
+            if (postDto.getCompanyExperienceList() != null){
+                for(CompanyExperienceDto experienceDto:postDto.getCompanyExperienceList()){
+                    CompanyExperience companyExperience = companyMapper.convertToCompanyExperience(experienceDto);
+                    companyExperience.setJobPost(companyJobPostEntity);
+                    companyExperienceRepository.save(companyExperience);
+                }
+            }
+
+            if(postDto.getEducationQualificationList() != null) {
+                for (CompanyEducationQualificationDto educationDto : postDto.getEducationQualificationList()) {
+                    CompanyEducationQualification companyEducationQualificationEntity = companyMapper.convertToCompanyEducation(educationDto);
+                    companyEducationQualificationEntity.setJobPost(companyJobPostEntity);
+                    companyEducationRepository.save(companyEducationQualificationEntity);
+                }
+            }
+            return true;
         }catch (Exception e){
             return false;
         }

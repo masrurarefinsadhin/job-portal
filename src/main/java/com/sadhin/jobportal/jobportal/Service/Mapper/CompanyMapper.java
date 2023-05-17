@@ -1,12 +1,11 @@
 package com.sadhin.jobportal.jobportal.Service.Mapper;
 
-import com.sadhin.jobportal.jobportal.Dto.CompanyEducationQualificationDto;
-import com.sadhin.jobportal.jobportal.Dto.CompanyExperienceDto;
-import com.sadhin.jobportal.jobportal.Dto.CompanyUserDto;
-import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
+import com.sadhin.jobportal.jobportal.Dto.*;
 import com.sadhin.jobportal.jobportal.Entity.*;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyMapper {
@@ -160,4 +159,70 @@ public class CompanyMapper {
         companyEducationQualificationDto.setMajorSubject(companyEducationQualification.getMajorSubject());
         return companyEducationQualificationDto;
     }
-}
+    public PostDto convertToPostDto(CompanyJobPostEntity jobPostEntity) {
+        PostDto postDto = new PostDto();
+        postDto.setId(jobPostEntity.getId());
+        postDto.setJobTitle(jobPostEntity.getJobTitle());
+        postDto.setVacancy(jobPostEntity.getVacancy());
+        postDto.setRequiredSkill(jobPostEntity.getRequiredSkill());
+        postDto.setJobType(jobPostEntity.getJobType());
+        postDto.setDeadline(jobPostEntity.getDeadline());
+        postDto.setContext(jobPostEntity.getContext());
+        postDto.setJobResponsibility(jobPostEntity.getJobResponsibility());
+        postDto.setJobLevel(jobPostEntity.getJobLevel());
+        postDto.setJobLocation(jobPostEntity.getJobLocation());
+        postDto.setMaxSalary(jobPostEntity.getMaxSalary());
+        postDto.setMinSalary(jobPostEntity.getMinSalary());
+        postDto.setSalaryType(jobPostEntity.getSalaryType());
+        postDto.setLunchFacilityType(jobPostEntity.getLunchFacilityType());
+        postDto.setSalaryReview(jobPostEntity.getSalaryReview());
+        postDto.setNumberOfYearlyBonus(jobPostEntity.getNumberOfYearlyBonus());
+        postDto.setWorkplace(jobPostEntity.getWorkplace());
+        postDto.setGenderType(jobPostEntity.getGenderType());
+        postDto.setAgeMin(jobPostEntity.getAgeMin());
+        postDto.setAgeMax(jobPostEntity.getAgeMax());
+        postDto.setCompanyUserId(jobPostEntity.getCompanyUserEntity().getId());
+        if(jobPostEntity.getEducationQualificationList()!=null){
+            postDto.setEducationQualificationList(jobPostEntity.getEducationQualificationList()
+                    .stream().map(this::convertToCompanyEducationDto).collect(Collectors.toList()));
+        }
+        if (jobPostEntity.getCompanyExperienceList()!=null){
+            postDto.setCompanyExperienceList(jobPostEntity.getCompanyExperienceList()
+                    .stream().map(this::convertToCompanyExperienceDto).collect(Collectors.toList()));
+        }return postDto;
+    }
+    public CompanyJobPostEntity convertToCompanyJobPostEntity(PostDto postDto) {
+        CompanyJobPostEntity jobPostEntity = new CompanyJobPostEntity();
+        jobPostEntity.setId(postDto.getId());
+        jobPostEntity.setJobTitle(postDto.getJobTitle());
+        jobPostEntity.setVacancy(postDto.getVacancy());
+        jobPostEntity.setRequiredSkill(postDto.getRequiredSkill());
+        jobPostEntity.setJobType(postDto.getJobType());
+        jobPostEntity.setDeadline(postDto.getDeadline());
+        jobPostEntity.setContext(postDto.getContext());
+        jobPostEntity.setJobResponsibility(postDto.getJobResponsibility());
+        jobPostEntity.setJobLevel(postDto.getJobLevel());
+        jobPostEntity.setJobLocation(postDto.getJobLocation());
+        jobPostEntity.setMaxSalary(postDto.getMaxSalary());
+        jobPostEntity.setMinSalary(postDto.getMinSalary());
+        jobPostEntity.setSalaryType(postDto.getSalaryType());
+        jobPostEntity.setLunchFacilityType(postDto.getLunchFacilityType());
+        jobPostEntity.setSalaryReview(postDto.getSalaryReview());
+        jobPostEntity.setNumberOfYearlyBonus(postDto.getNumberOfYearlyBonus());
+        jobPostEntity.setWorkplace(postDto.getWorkplace());
+        jobPostEntity.setGenderType(postDto.getGenderType());
+        jobPostEntity.setAgeMin(postDto.getAgeMin());
+        jobPostEntity.setAgeMax(postDto.getAgeMax());
+        /*if (postDto.getCompanyExperienceList() !=null){
+            jobPostEntity.setCompanyExperienceList(postDto.getCompanyExperienceList()
+                    .stream().map(this::convertToCompanyExperience).collect(Collectors.toList()));
+        }
+        if (postDto.getEducationQualificationList() !=null){
+            jobPostEntity.setEducationQualificationList(postDto.getEducationQualificationList()
+                    .stream().map(this::convertToCompanyEducation).collect(Collectors.toList()));
+        }*/
+        return jobPostEntity;
+    }
+
+
+    }
