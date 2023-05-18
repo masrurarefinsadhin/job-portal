@@ -19,7 +19,7 @@ public class UserEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id",unique = true, updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @Column(unique = true)
@@ -28,7 +28,6 @@ public class UserEntity{
     @Column(unique = true)
     private Integer primaryContactNumber;
 
-    @Column
     private Instant cratedAt;
 
     @Column

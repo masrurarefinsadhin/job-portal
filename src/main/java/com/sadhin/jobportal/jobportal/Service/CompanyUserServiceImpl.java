@@ -6,7 +6,6 @@ import com.sadhin.jobportal.jobportal.Repository.*;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CandidateMapper;
 import com.sadhin.jobportal.jobportal.Service.Mapper.CompanyMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -140,5 +139,17 @@ public class CompanyUserServiceImpl implements CompanyUserService{
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public List<PostDto> getPostedJob(Long id) {
+        /*try {
+            return companyJobPostRepository.findAllByCompanyUserEntityId(id).stream().map(
+                    companyMapper::convertToPostDto).collect(Collectors.toList());
+        }
+        catch (Exception e){
+            return null;
+        }*/
+        return null;
     }
 }

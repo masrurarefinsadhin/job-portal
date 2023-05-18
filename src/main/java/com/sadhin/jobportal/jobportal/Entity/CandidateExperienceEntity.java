@@ -17,7 +17,7 @@ public class CandidateExperienceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @Column(name = "id",unique = true,updatable = false, nullable = false)
+    @Column(name = "id")
     private Long id;
 
     @Column

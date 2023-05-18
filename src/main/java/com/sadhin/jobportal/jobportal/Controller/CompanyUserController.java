@@ -59,5 +59,14 @@ public class CompanyUserController {
             return ResponseEntity.ok(null);
         }
     }
+    @GetMapping ("/get-posted-job/{id}")
+    public ResponseEntity<List<PostDto>> getPostedJob(@PathVariable("id") Long id){
+        try {
+            List<PostDto> result = companyUserService.getPostedJob(id);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
+        }
+    }
 
 }

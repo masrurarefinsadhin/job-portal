@@ -14,4 +14,5 @@ public interface CompanyUserService {
 
     List<ResumeDto> getResumeList();
 
+    List<PostDto> getPostedJob(Long id);
 }

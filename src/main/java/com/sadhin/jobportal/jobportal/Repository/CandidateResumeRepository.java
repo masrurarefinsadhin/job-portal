@@ -12,4 +12,8 @@ public interface CandidateResumeRepository extends JpaRepository<CandidateResume
     Optional<CandidateResumeEntity> findByCandidateUserId(Long id);
 
 
+    @Query(value = "delete from CandidateResumeEntity r where r.id = :id")
+    void deleteByResumeId(Long id);
+
+
 }

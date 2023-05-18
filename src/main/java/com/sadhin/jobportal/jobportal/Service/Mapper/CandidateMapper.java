@@ -6,8 +6,10 @@ import com.sadhin.jobportal.jobportal.Dto.CandidateUserDto;
 import com.sadhin.jobportal.jobportal.Dto.ResumeDto;
 import com.sadhin.jobportal.jobportal.Entity.*;
 import com.sadhin.jobportal.jobportal.Repository.UserRepository;
+import net.bytebuddy.pool.TypePool;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -133,6 +135,8 @@ public class CandidateMapper {
         resumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());
         //resumeEntity.setEducationList(resumeDto.getEducationList());
         //resumeEntity.setExperienceList(resumeDto.getExperienceList());
+        resumeEntity.setEducationList(null);
+        resumeEntity.setExperienceList(null);
         return resumeEntity;
     }
     public  ResumeDto convertToResumeDto(CandidateResumeEntity resumeEntity) {

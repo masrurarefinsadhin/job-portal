@@ -14,4 +14,5 @@ public interface CandidateUserRepository extends JpaRepository<CandidateUserEnti
     Optional<CandidateUserEntity> findByEmailAndPassword(String email, String password);
 
 
+
 }

@@ -79,6 +79,15 @@ public class CandidateUserController {
             return ResponseEntity.ok(false);
         }
     }
+    @GetMapping("/find-resume-user/{candidateUserId}")
+    public ResponseEntity<ResumeDto> findResume(@PathVariable("candidateUserId") Long id){
+        try {
+            ResumeDto result = candidateUserService.findResume(id);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.ok(null);
+        }
+    }
 
 
 }

@@ -24,7 +24,9 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     private final CandidateMapper candidateMapper;
     private final CompanyMapper companyMapper;
     private final CompanyJobPostRepository jopPostRepository;
-    public CandidateUserServiceImpl(CandidateUserRepository candidateUserRepository, CandidateResumeRepository candidateResumeRepository, UserRepository userRepository, ApplyRepository applyRepository, CandidateMapper candidateMapper, CompanyMapper companyMapper, CompanyJobPostRepository jopPostRepository) {
+    private final CandidateExperienceRepository candidateExperienceRepository;
+    private final CandidateEducationRepository candidateEducationRepository;
+    public CandidateUserServiceImpl(CandidateUserRepository candidateUserRepository, CandidateResumeRepository candidateResumeRepository, UserRepository userRepository, ApplyRepository applyRepository, CandidateMapper candidateMapper, CompanyMapper companyMapper, CompanyJobPostRepository jopPostRepository, CandidateExperienceRepository candidateExperienceRepository, CandidateEducationRepository candidateEducationRepository) {
         this.candidateUserRepository = candidateUserRepository;
         this.candidateResumeRepository = candidateResumeRepository;
         this.userRepository = userRepository;
@@ -32,6 +34,8 @@ public class CandidateUserServiceImpl implements CandidateUserService{
         this.candidateMapper = candidateMapper;
         this.companyMapper = companyMapper;
         this.jopPostRepository = jopPostRepository;
+        this.candidateExperienceRepository = candidateExperienceRepository;
+        this.candidateEducationRepository = candidateEducationRepository;
     }
 
     @Override
@@ -59,7 +63,6 @@ public class CandidateUserServiceImpl implements CandidateUserService{
     public boolean createResume(ResumeDto resumeDto) {
         try {
 
-
             Optional<CandidateResumeEntity> candidateResume = candidateResumeRepository.findByCandidateUserId(resumeDto.getCandidateUserId());
             //candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
 
@@ -67,24 +70,45 @@ public class CandidateUserServiceImpl implements CandidateUserService{
             CandidateResumeEntity candidateResumeEntity= candidateMapper.convertToCandidateResumeEntity(resumeDto);
 
             candidateResume.ifPresent(resumeEntity -> candidateResumeEntity.setId(resumeEntity.getId()));
-            //candidateResumeEntity.setId(candidateResume.get().getId());
+
             candidateResumeEntity.setCandidateUserEntity(candidateUserEntity);
 
-            /*candidateResumeEntity.setFatherName(resumeDto.getFatherName());
-            candidateResumeEntity.setMotherName(resumeDto.getMotherName());
-            candidateResumeEntity.setPresentAddress(resumeDto.getPresentAddress());
-            candidateResumeEntity.setPermanentAddress(resumeDto.getPermanentAddress());
-            candidateResumeEntity.setDateOfBirth(resumeDto.getDateOfBirth());
-            candidateResumeEntity.setNationalityType(resumeDto.getNationalityType());
-            candidateResumeEntity.setNationalIdNumber(resumeDto.getNationalIdNumber());
-            candidateResumeEntity.setReligionType(resumeDto.getReligionType());
-            candidateResumeEntity.setMaritalStatus(resumeDto.getMaritalStatus());
-            candidateResumeEntity.setSecondaryContactNumber(resumeDto.getSecondaryContactNumber());
-            candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
-            candidateResumeEntity.setBloodGroup(resumeDto.getBloodGroup());
-            candidateResumeEntity.setSecondaryEmail(resumeDto.getSecondaryEmail());*/
-
             candidateResumeRepository.save(candidateResumeEntity);
+
+
+            if (resumeDto.getEducationList() !=null && resumeDto.getEducationList().size()>0 ){
+                resumeDto.getEducationList().forEach(educationDto -> {
+                    CandidateEducationEntity candidateEducationEntity =candidateMapper.convertToCandidateEducationEntity(educationDto);
+                    candidateEducationEntity.setCandidateResume(candidateResumeEntity);
+                    candidateEducationRepository.save(candidateEducationEntity);
+                    //candidateResumeEntity.getEducationList().add(candidateEducationEntity);
+                });
+            }
+            else{
+                List<CandidateEducationEntity> candidateEducationEntityList=candidateEducationRepository.findAllByCandidateResumeId(resumeDto.getId());
+                if (candidateEducationEntityList !=null){
+                    candidateEducationRepository.deleteAll(candidateEducationEntityList);
+                }
+
+            }
+
+            if (resumeDto.getExperienceList() !=null && resumeDto.getExperienceList().size()>0){
+                resumeDto.getExperienceList().forEach(experienceDto -> {
+
+                    CandidateExperienceEntity candidateExperienceEntity=candidateMapper.convertToCandidateExperienceEntity(experienceDto);
+                    candidateExperienceEntity.setCandidateResume(candidateResumeEntity);
+                    //candidateExperienceRepository.deleteByExperienceId(experienceDto.getId());
+                    candidateExperienceRepository.save(candidateExperienceEntity);
+                    //candidateResumeEntity.getExperienceList().add(candidateExperienceEntity);
+                });
+            }
+            else {
+                List<CandidateExperienceEntity> candidateExperienceEntityList=candidateExperienceRepository.findAllByCandidateResumeId(resumeDto.getId());
+                if (candidateExperienceEntityList !=null ){
+                    candidateExperienceRepository.deleteAll(candidateExperienceEntityList);
+                }
+            }
+
             return true;
         } catch (Exception e) {
             return false;
@@ -203,6 +227,16 @@ public class CandidateUserServiceImpl implements CandidateUserService{
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public ResumeDto findResume(Long id) {
+        try {
+            return candidateResumeRepository.findByCandidateUserId(id).map(candidateMapper::convertToResumeDto).get();
+        }catch (Exception e){
+            return null;
+        }
+
     }
 
 

@@ -23,4 +23,6 @@ public interface CandidateUserService {
     Optional<PostDto> getJobPostById(Long id);
 
     boolean applyForJob(ApplyDto applyDto);
+
+    ResumeDto findResume(Long id);
 }
